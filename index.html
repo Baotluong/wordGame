@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script type="text/javascript" src="wordList.js"></script>
+</head>
+<body>
+<p>Bao's Game</p>
+<p id ="a">Enter your guess word</p>
+<input type="text" id="myText" value="ducks">
+<button onclick="guessWord()">Guess!</button>
+<p></p>
+<div id="secret"></div>
+<div id="guessDiv"></div>
+<p></p>
+<div id="test"></div>
+<script>
+document.getElementById("test").innerHTML = uniqueArray;
+document.getElementById("secret").innerHTML = secretWord;
+
+function guessWord(){
+	var guess = document.getElementById("myText").value;
+	var count=0;
+    for(var i=0;i<guess.length;i++){
+        for(var x=0;x<secretWord.length; x++){
+            if(guess[i] === secretWord[x]){
+                count++;
+            }
+        }
+    }              
+	document.getElementById("guessDiv").innerHTML = guess+" "+count;
+};
+
+</script>
+</body>
+</html>
