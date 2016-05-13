@@ -6,15 +6,12 @@
 <style>
 td{
     text-align:center;
-    color:white;
+    color:black;
     height:30px;
     width:30px;
     border:1px solid black;
     border-radius:100%;
-    
-}
-#1{
-    background-color:green;
+    background-color:white;
 }
 </style>
 </head>
@@ -26,7 +23,7 @@ td{
 <p></p>
 <table style>
 <tr>
-<td id="1">A</td><td id="b">B</td><td id="c">C</td><td id="d">D</td><td id="e">E</td><td id="f">F</td><td id="g">G</td><td id="h">H</td><td id="i">I</td><td id="j">J</td><td id="k">K</td><td id="l">L</td><td id="m">M</td>
+<td id="a">A</td><td id="b">B</td><td id="c">C</td><td id="d">D</td><td id="e">E</td><td id="f">F</td><td id="g">G</td><td id="h">H</td><td id="i">I</td><td id="j">J</td><td id="k">K</td><td id="l">L</td><td id="m">M</td>
 </tr>
 <tr>
 <td id="n">N</td><td id="o">O</td><td id="p">P</td><td id="q">Q</td><td id="r">R</td><td id="s">S</td><td id="t">T</td><td id="u">U</td><td id="v">V</td><td id="w">W</td><td id="x">X</td><td id="y">Y</td><td id="z">Z</td>
@@ -38,23 +35,33 @@ td{
 <div id="secret"></div>
 <div id="test"></div>
 <script>
+$(function() {
+    window.ColorGame = window.ColorGame || {};
+    window.ColorGame.colorArray = ["rgb(255, 255, 255)","rgb(0, 128, 0)","rgb(255, 17, 17)"];
 
-document.getElementById("test").innerHTML = uniqueArray;
-document.getElementById("secret").innerHTML = secretWord;
+    $("#test").html(uniqueArray);
+    $("#secret").html(secretWord);
 
-function guessWord(){
-	var guess = document.getElementById("myText").value;
-	var count=0;
-    for(var i=0;i<guess.length;i++){
-        for(var x=0;x<secretWord.length; x++){
-            if(guess[i] === secretWord[x]){
-                count++;
+    $("td").click(function() {
+        var colorIndexOf = window.ColorGame.colorArray.indexOf($(this).css("background-color"));
+        colorIndexOf++;
+        colorIndexOf = colorIndexOf % 3;
+        $(this).css("background-color", window.ColorGame.colorArray[colorIndexOf]);
+    });
+
+    function guessWord(){
+    	var guess = document.getElementById("myText").value;
+    	var count=0;
+        for(var i=0;i<guess.length;i++){
+            for(var x=0;x<secretWord.length; x++){
+                if(guess[i] === secretWord[x]){
+                    count++;
+                }
             }
-        }
-    }              
-    $("#guessDiv").append("<div>"+guess+", "+count+" match</div>");
-};
-
+        }              
+        $("#guessDiv").append("<div>"+guess+", "+count+" match</div>");
+    };
+});
 </script>
 </body>
 </html>
