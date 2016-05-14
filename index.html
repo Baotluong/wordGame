@@ -13,15 +13,20 @@ td{
     border-radius:100%;
     background-color:white;
 }
+#secret{
+    color:white;
+}
 </style>
 </head>
 <body>
-<p>Bao's Game</p>
-<p>Enter your guess word</p>
-<input type="text" id="myText" value="ducks">
-<button onclick="guessWord()">Guess!</button>
+<p>What's the secret 5-letter word?</p>
+<p>Enter your guess! I'll tell you how many letters of your letters are correct.</p>
+<input type="text" id="myText" value="ducks" pattern=".{5,5}" required title="5 to 10 characters">
+<button id="myButton" onclick="guessWord()">Guess!</button>
 <p></p>
-<table style>
+<div>Track your letters here! Green=Confirmed Right. Red=Confirmed Wrong.</div>
+<p></p>
+<table>
 <tr>
 <td id="a">A</td><td id="b">B</td><td id="c">C</td><td id="d">D</td><td id="e">E</td><td id="f">F</td><td id="g">G</td><td id="h">H</td><td id="i">I</td><td id="j">J</td><td id="k">K</td><td id="l">L</td><td id="m">M</td>
 </tr>
@@ -35,11 +40,12 @@ td{
 <div id="secret"></div>
 <div id="test"></div>
 <script>
+var totalGuesses=0;
+
 $(function() {
     window.ColorGame = window.ColorGame || {};
     window.ColorGame.colorArray = ["rgb(255, 255, 255)","rgb(0, 128, 0)","rgb(255, 17, 17)"];
 
-    $("#test").html(uniqueArray);
     $("#secret").html(secretWord);
 
     $("td").click(function() {
@@ -48,20 +54,36 @@ $(function() {
         colorIndexOf = colorIndexOf % 3;
         $(this).css("background-color", window.ColorGame.colorArray[colorIndexOf]);
     });
+});
 
-    function guessWord(){
-    	var guess = document.getElementById("myText").value;
-    	var count=0;
+$(document).ready(function(){
+    $('#myText').keypress(function(e){
+      if(e.keyCode==13)
+      $('#myButton').click();
+    });
+});
+
+function guessWord(){
+    var guess = document.getElementById("myText").value;
+    var count=0;
+    if(dictCheck(guess)){    
         for(var i=0;i<guess.length;i++){
             for(var x=0;x<secretWord.length; x++){
-                if(guess[i] === secretWord[x]){
-                    count++;
+               if(guess[i] === secretWord[x]){
+                     count++;
                 }
             }
-        }              
-        $("#guessDiv").append("<div>"+guess+", "+count+" match</div>");
-    };
-});
+        }
+        totalGuesses++;
+        $("#guessDiv").append("<div>"+totalGuesses+") "+guess+", "+count+" match</div>");
+        if(count===5){
+            $("#guessDiv").append("<div>-= "+guess+" is correct! It only took you "+totalGuesses+" guesses! =-</div>");
+        }
+    }else{
+        $("#guessDiv").append("<div>X) "+guess+", invalid guess</div>");    
+    }              
+};
+
 </script>
 </body>
 </html>
