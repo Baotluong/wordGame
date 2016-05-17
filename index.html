@@ -19,8 +19,9 @@ td{
 </style>
 </head>
 <body>
-<p>What's the secret 5-letter word?</p>
+<h2>What's the secret 5-letter word?</h2>
 <p>Enter your guess! I'll tell you how many letters of your letters are correct.</p>
+<p>Tip: The secret word only has unique letters. However, your guesses don't have to be.</p>
 <input type="text" id="myText" value="ducks" pattern=".{5,5}" required title="5 to 10 characters">
 <button id="myButton" onclick="guessWord()">Guess!</button>
 <p></p>
@@ -76,7 +77,7 @@ function guessWord(){
         }
         totalGuesses++;
         $("#guessDiv").append("<div>"+totalGuesses+") "+guess+", "+count+" match</div>");
-        if(count===5){
+        if(guess===secretWord){
             $("#guessDiv").append("<div>-= "+guess+" is correct! It only took you "+totalGuesses+" guesses! =-</div>");
         }
     }else{
