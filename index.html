@@ -65,7 +65,7 @@ $(document).ready(function(){
 });
 
 function guessWord(){
-    var guess = document.getElementById("myText").value;
+    var guess = document.getElementById("myText").value.toLowerCase();
     var count=0;
     if(dictCheck(guess)){    
         for(var i=0;i<guess.length;i++){
@@ -76,7 +76,7 @@ function guessWord(){
             }
         }
         totalGuesses++;
-        $("#guessDiv").append("<div>"+totalGuesses+") "+guess+", "+count+" match</div>");
+        $("#guessDiv").append("<div>"+totalGuesses+") "+guess.charAt(0).toUpperCase() + guess.slice(1)+", "+count+" match</div>");
         if(guess===secretWord){
             $("#guessDiv").append("<div>-= "+guess+" is correct! It only took you "+totalGuesses+" guesses! =-</div>");
         }
